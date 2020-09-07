@@ -14,7 +14,7 @@ else
 fi
 sleep 3
 
-file="/root/k8s_1_17_3.tar"
+file="/root/aaaa.tar"
 if [ ! -f "$file" ]; then
   echo "/root/k8s_1_17_3.tar does not exist,need Upload it to /root directory"
   exit 0
@@ -102,6 +102,7 @@ yum makecache fast
 sleep 0.1
 yum -y update
 sleep 0.1
+rm -f /var/run/yum.pid
 yum -y install yum-utils device-mapper-persistent-data lvm2
 sleep 0.1
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -114,6 +115,7 @@ systemctl start docker
 
 cat > /etc/docker/daemon.json <<EOF
 {
+ "registry-mirrors": ["https://lk7ygvoh.mirror.aliyuncs.com"],
  "exec-opts": ["native.cgroupdriver=systemd"],
  "log-driver": "json-file",
  "log-opts": {
@@ -168,7 +170,7 @@ G()
 yum install kubeadm-1.17.3 kubelet-1.17.3 -y
 systemctl enable kubelet
 kubelet --version
-docker load -i /root/k8s_1_17_3.tar
+docker load -i /root/aaaa.tar
 }
 
 ###################################################
